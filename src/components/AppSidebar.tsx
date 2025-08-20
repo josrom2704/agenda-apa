@@ -39,14 +39,14 @@ export function AppSidebar() {
   return (
     <Sidebar className="border-r border-border/40 bg-card/50 backdrop-blur-md">
       <SidebarHeader className="p-6">
-        <div className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
             <Calendar className="w-4 h-4 text-primary-foreground" />
           </div>
           <h1 className="text-xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
             Agenda
           </h1>
-        </div>
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
