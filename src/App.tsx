@@ -8,6 +8,7 @@ import Agenda from "./pages/Agenda";
 import Solicitudes from "./pages/Solicitudes";
 import Tareas from "./pages/Tareas";
 import Ajustes from "./pages/Ajustes";
+import AuthCallback from "./pages/AuthCallback";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/solicitudes" element={<Solicitudes />} />
           <Route path="/tareas" element={<Tareas />} />
           <Route path="/ajustes" element={<Ajustes />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
