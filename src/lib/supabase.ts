@@ -1,10 +1,15 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://chnkjseqtaueecamkmuh.supabase.co'
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNobmtqc2VxdGF1ZWVjYW1rbXVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU4MTA3MTgsImV4cCI6MjA3MTM4NjcxOH0.ZW1gxQ4XlEvaaBoIlb1qpcuRWxLtx1-ME-wluOb3HE4'
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing Supabase environment variables')
+}
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
+// ... existing code ...
 // Tipos para las entidades de la base de datos
 export interface User {
   id: string
