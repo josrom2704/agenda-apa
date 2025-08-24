@@ -95,7 +95,7 @@ export const useAuth = () => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`
+          redirectTo: `${import.meta.env.VITE_APP_URL || 'https://agenda-apa.vercel.app'}/auth/callback`
         }
       })
       if (error) throw error
