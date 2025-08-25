@@ -90,21 +90,20 @@ export const useAuth = () => {
     return () => subscription.unsubscribe()
   }, [])
 
-  const signInWithGoogle = async () => {
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: 'https://agenda-apa.vercel.app/auth/callback' // ✅ URL CORREGIDA: tu app, no el callback de Supabase
-        }
-      })
-      if (error) throw error
-    } catch (error) {
-      console.error('Error signing in with Google:', error)
-      throw error
-    }
+ // ... existing code ...
+const signInWithGoogle = async () => {
+  try {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google'
+      // Sin redirectTo - que Supabase maneje todo
+    })
+    if (error) throw error
+  } catch (error) {
+    console.error('Error signing in with Google:', error)
+    throw error
   }
-
+}
+// ... existing code ...
   const signOut = async () => {
     try {
       const { error } = await supabase.auth.signOut()
