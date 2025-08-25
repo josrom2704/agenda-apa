@@ -95,7 +95,7 @@ export const useAuth = () => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: 'https://agenda-apa.vercel.app/' // ✅ URL CORREGIDA: tu app, no el callback de Supabase
+          redirectTo: 'https://agenda-apa.vercel.app/auth/callback' // ✅ URL CORREGIDA: tu app, no el callback de Supabase
         }
       })
       if (error) throw error
