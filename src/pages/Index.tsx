@@ -25,12 +25,12 @@ export default function Index() {
       <div className="min-h-screen p-8">
         <Card className="max-w-4xl mx-auto">
           <CardHeader>
-            <CardTitle>Dashboard - Bienvenido, {user.name}!</CardTitle>
+            <CardTitle>Dashboard - Bienvenido, {user.name || user.email}!</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <p>Email: {user.email}</p>
-              <p>Timezone: {user.timezone}</p>
+              <p>ID: {user.id}</p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
                 <Card>
                   <CardHeader>
