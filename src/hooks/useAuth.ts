@@ -92,15 +92,25 @@ export const useAuth = () => {
 
   const signInWithGoogle = async () => {
     try {
+      console.log('🔍 DEBUG: Iniciando login con Google...')
+      console.log('🔍 DEBUG: VITE_APP_URL =', import.meta.env.VITE_APP_URL)
+      console.log('🔍 DEBUG: redirectTo =', `${import.meta.env.VITE_APP_URL || 'https://agenda-apa.vercel.app'}/auth/callback`)
+      
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: `${import.meta.env.VITE_APP_URL || 'https://agenda-apa.vercel.app'}/auth/callback`
         }
       })
-      if (error) throw error
+      
+      if (error) {
+        console.error('❌ ERROR en signInWithOAuth:', error)
+        throw error
+      } else {
+        console.log('✅ DEBUG: signInWithOAuth exitoso, redirigiendo...')
+      }
     } catch (error) {
-      console.error('Error signing in with Google:', error)
+      console.error('❌ ERROR general en signInWithGoogle:', error)
       throw error
     }
   }
