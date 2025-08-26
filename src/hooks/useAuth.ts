@@ -21,19 +21,23 @@ export const useAuth = () => {
             .single()
 
           if (error && error.code === 'PGRST116') {
-            // Usuario no existe, crearlo
-            const { data: newUser, error: createError } = await supabase
-              .from('users')
-              .insert([{
-                id: authUser.id,
-                name: authUser.user_metadata?.full_name || 'Usuario',
-                email: authUser.email || '',
-                timezone: 'America/El_Salvador'
-              }])
-              .select()
-              .single()
+            // Usuario no existe, crearlo usando la función
+            const { error: createError } = await supabase.rpc('create_user_from_auth', {
+              user_id: authUser.id,
+              user_name: authUser.user_metadata?.full_name || authUser.email || 'Usuario',
+              user_email: authUser.email || ''
+            })
 
             if (createError) throw createError
+            
+            // Obtener el usuario creado
+            const { data: newUser, error: fetchError } = await supabase
+              .from('users')
+              .select('*')
+              .eq('id', authUser.id)
+              .single()
+
+            if (fetchError) throw fetchError
             setUser(newUser)
           } else if (error) {
             throw error
@@ -62,19 +66,23 @@ export const useAuth = () => {
             .single()
 
           if (error && error.code === 'PGRST116') {
-            // Crear usuario
-            const { data: newUser, error: createError } = await supabase
-              .from('users')
-              .insert([{
-                id: session.user.id,
-                name: session.user.user_metadata?.full_name || 'Usuario',
-                email: session.user.email || '',
-                timezone: 'America/El_Salvador'
-              }])
-              .select()
-              .single()
+            // Crear usuario usando la función
+            const { error: createError } = await supabase.rpc('create_user_from_auth', {
+              user_id: session.user.id,
+              user_name: session.user.user_metadata?.full_name || session.user.email || 'Usuario',
+              user_email: session.user.email || ''
+            })
 
             if (createError) throw createError
+            
+            // Obtener el usuario creado
+            const { data: newUser, error: fetchError } = await supabase
+              .from('users')
+              .select('*')
+              .eq('id', session.user.id)
+              .single()
+
+            if (fetchError) throw fetchError
             setUser(newUser)
           } else if (error) {
             throw error
@@ -90,20 +98,22 @@ export const useAuth = () => {
     return () => subscription.unsubscribe()
   }, [])
 
- // ... existing code ...
-const signInWithGoogle = async () => {
-  try {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google'
-      // Sin redirectTo - que Supabase maneje todo
-    })
-    if (error) throw error
-  } catch (error) {
-    console.error('Error signing in with Google:', error)
-    throw error
+  const signInWithGoogle = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google'
+        // Sin redirectTo - que Supabase maneje todo
+      })
+      if (error) {
+        console.error('Error en signInWithOAuth:', error)
+        throw error
+      }
+      console.log('Login iniciado correctamente')
+    } catch (error) {
+      console.error('Error signing in with Google:', error)
+    }
   }
-}
-// ... existing code ...
+
   const signOut = async () => {
     try {
       const { error } = await supabase.auth.signOut()
